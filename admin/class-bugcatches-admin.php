@@ -153,7 +153,7 @@ class Bugcatches_Admin {
 		$valid = array();
 
 		//Cleanup
-		$valid['active'] = (isset($input['active']) && !empty($input['active'])) ? 1 : 0;
+		$valid['bugcatches_active'] = (isset($input['bugcatches_active']) && !empty($input['bugcatches_active'])) ? 1 : 0;
 		$valid['feedback'] = (isset($input['feedback']) && !empty($input['feedback'])) ? 1: 0;
 		$valid['bugcatches_key'] = $input['bugcatches_key'];
 
@@ -162,9 +162,5 @@ class Bugcatches_Admin {
 
 	public function options_update() {
 		register_setting($this->plugin_name, $this->plugin_name, array($this, 'validate'));
-	}
-
-	public function report_new_error() {
-
 	}
 }

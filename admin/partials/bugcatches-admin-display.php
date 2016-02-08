@@ -21,7 +21,7 @@
     $options = get_option($this->plugin_name);
 
     // Cleanup
-    $active = $options['active'];
+    $bugcatches_active = $options['bugcatches_active'];
     $feedback = $options['feedback'];
     $bugcatches_key = $options['bugcatches_key'];
     ?>
@@ -36,8 +36,8 @@
         <legend class="screen-reader-text">
             <span><?php _e('Send information to bugcatches.com', $this->plugin_name);?></span>
         </legend>
-        <label for="<?php echo $this->plugin_name; ?>-cleanup">
-            <input type="checkbox" id="<?php echo $this->plugin_name; ?>-active" name="<?php echo $this->plugin_name; ?>[active]" value="1" <?php checked($active, 1); ?> />
+        <label for="<?php echo $this->plugin_name; ?>-bugcatches_active">
+            <input type="checkbox" id="<?php echo $this->plugin_name; ?>-bugcatches_active" name="<?php echo $this->plugin_name; ?>[bugcatches_active]" value="1" <?php checked($bugcatches_active, 1); ?> />
             <span><?php esc_attr_e('Active (will send notifications to bugcatches.com)', $this->plugin_name); ?></span>
         </label>
     </fieldset>

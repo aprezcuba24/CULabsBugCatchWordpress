@@ -27,6 +27,10 @@
  * @subpackage Bugcatches/includes
  * @author     Duvan Monsalve <duvanmonsa@gmail.com>
  */
+
+use CULabs\BugCatch\Client\ClientFactory;
+use CULabs\BugCatch\ErrorHandler\ErrorHandler;
+
 class Bugcatches {
 
 	/**
@@ -56,6 +60,20 @@ class Bugcatches {
 	 * @var      string    $version    The current version of the plugin.
 	 */
 	protected $version;
+	/**
+	 * Notifications active
+	 */
+	protected $active;
+	/**
+	 * Bugcatches project key
+	 */
+	protected $api_key;
+	/**
+	 * Bugcatches client
+	 */
+	protected $client;
+
+	protected $feedback;
 
 	/**
 	 * Define the core functionality of the plugin.
@@ -119,6 +137,11 @@ class Bugcatches {
 		 */
 		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'public/class-bugcatches-public.php';
 
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'bugcatch-php/Client/ClientFactory.php';
+
+		require_once plugin_dir_path( dirname( __FILE__ ) ) . 'bugcatch-php/ErrorHandler/ErrorHandler.php';
+
 		$this->loader = new Bugcatches_Loader();
 
 	}
@@ -179,6 +202,42 @@ class Bugcatches {
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_styles' );
 		$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'enqueue_scripts' );
 
+		if( $this->getFeedback()) 	{
+			$this->loader->add_action( 'wp_enqueue_scripts', $plugin_public, 'add_feedback_button');
+		}
+
+		// Hook up automatic error handling
+		set_error_handler(array($this, 'errorHandler'));
+		set_exception_handler(array($this, 'exceptionHandler'));
+
+	}
+
+	/**
+	 * Hooks the errors.
+	 *
+	 * @since    1.0.0
+	 */
+	function errorHandler($error,$errstr)
+	{
+		if($this->getActive())
+		{
+			$errorHandler = $this->getErrorHandler();
+			die('va');
+
+
+//		echo $error;
+//		echo $errstr;
+//		die('va');
+
+		}
+	}
+	/**
+	 * Hooks the exceptions.
+	 *
+	 * @since    1.0.0
+	 */
+	function exceptionHandler() {
+
 	}
 
 	/**
@@ -219,6 +278,50 @@ class Bugcatches {
 	 */
 	public function get_version() {
 		return $this->version;
+	}
+
+	protected function getFeedback()
+	{
+		$options = get_option($this->plugin_name);
+		return $options['feedback'];
+	}
+
+	protected function getActive()
+	{
+		$options = get_option($this->plugin_name);
+		return $options['bugcatches_active'];
+	}
+
+
+	/**
+	 * @param mixed $active
+	 */
+	public function setActive($active)
+	{
+		$this->active = $active;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getApiKey()
+	{
+		$options = get_option($this->plugin_name);
+		return $options['bugcatches_key'];
+	}
+
+	/**
+	 * @param mixed $api_key
+	 */
+	public function setApiKey($api_key)
+	{
+		$this->api_key = $api_key;
+	}
+
+	protected function getErrorHandler()
+	{
+		$clientFactory = new ClientFactory($this->getApiKey());
+		return new ErrorHandler($clientFactory->getClient(), $this->getActive());
 	}
 
 }

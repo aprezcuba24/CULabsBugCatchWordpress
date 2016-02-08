@@ -20,6 +20,7 @@
  * @subpackage Bugcatches/public
  * @author     Duvan Monsalve <duvanmonsa@gmail.com>
  */
+
 class Bugcatches_Public {
 
 	/**
@@ -98,6 +99,13 @@ class Bugcatches_Public {
 
 		wp_enqueue_script( $this->plugin_name, plugin_dir_url( __FILE__ ) . 'js/bugcatches-public.js', array( 'jquery' ), $this->version, false );
 
+
+	}
+
+	public function add_feedback_button($apikey) {
+
+		$bugcatches = new  Bugcatches();
+		wp_enqueue_script( $this->plugin_name.'-feedback', '//bugcatches.com/feedback/'.$bugcatches->getApiKey().'/create.js', array( 'jquery' ), $this->version, false );
 	}
 
 }

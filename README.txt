@@ -1,18 +1,18 @@
 === Plugin Name ===
 Contributors: duvanmonsa
 Donate link: http://bugcatches.com/
-Tags: bugcatches, bugs,error, find error, report error
+Tags: bugcatches, bug ,error, report,monitoring, exception, logging ,notification
 Requires at least: 3.0.1
 Tested up to: 3.4
 Stable tag: 4.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-This plugin let you report errors to bugcatches.com so you can get a notification to your email and track all error in a single place.
+This plugin let you catch  and report errors to bugcatches.com so you can get a notification to your email and track all error in a single place.
 
 == Description ==
 
-This plugin let you report errors to bugcatches.com so you can get a notification to your email and track all error in a single place.
+This plugin let you catch and report errors to bugcatches.com so you can get a notification to your email and track all error in a single place.
 
 
 == Installation ==
