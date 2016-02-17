@@ -57,6 +57,10 @@ register_deactivation_hook( __FILE__, 'deactivate_bugcatches' );
  */
 require plugin_dir_path( __FILE__ ) . 'includes/class-bugcatches.php';
 
+//load the error and clien class for bugcatch
+require_once plugin_dir_path( __FILE__ ) . 'bugcatch-php/Client/ClientFactory.php';
+require_once plugin_dir_path( __FILE__ ) . 'bugcatch-php/ErrorHandler/ErrorHandler.php';
+
 /**
  * Begins execution of the plugin.
  *
