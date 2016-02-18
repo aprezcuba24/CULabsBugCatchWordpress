@@ -154,6 +154,13 @@ class Bugcatches_Admin {
 
 		//Cleanup
 		$valid['bugcatches_active'] = (isset($input['bugcatches_active']) && !empty($input['bugcatches_active'])) ? 1 : 0;
+		$valid['bugcatches_error'] = (isset($input['bugcatches_error']) && !empty($input['bugcatches_error'])) ? 1 : 0;
+		$valid['bugcatches_warning'] = (isset($input['bugcatches_warning']) && !empty($input['bugcatches_warning'])) ? 1 : 0;
+		$valid['bugcatches_notice'] = (isset($input['bugcatches_notice']) && !empty($input['bugcatches_notice'])) ? 1 : 0;
+		$valid['bugcatches_strict'] = (isset($input['bugcatches_strict']) && !empty($input['bugcatches_strict'])) ? 1 : 0;
+		$valid['bugcatches_deprecate'] = (isset($input['bugcatches_deprecate']) && !empty($input['bugcatches_deprecate'])) ? 1 : 0;
+		$valid['bugcatches_unknown'] = (isset($input['bugcatches_unknown']) && !empty($input['bugcatches_unknown'])) ? 1 : 0;
+
 		$valid['feedback'] = (isset($input['feedback']) && !empty($input['feedback'])) ? 1: 0;
 		$valid['bugcatches_key'] = $input['bugcatches_key'];
 

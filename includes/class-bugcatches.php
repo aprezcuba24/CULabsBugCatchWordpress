@@ -226,43 +226,68 @@ class Bugcatches {
 				case E_CORE_ERROR:
 				case E_COMPILE_ERROR:
 				case E_USER_ERROR:
-					$errorHandler = $this->getErrorHandler();
-					$errorHandler->setFiles($_FILES);
-					$errorHandler->setGet($_GET);
-					$errorHandler->setPost($_POST);
-					$errorHandler->setUserData(array());
-					$errorHandler->setUserData(array());
-					$exception = new ErrorException($errstr,$error,1,$errfile,$errline);
-					$errorHandler->notifyException($exception);
+					if($this->isTypeActive('error'))
+					{
+						$this->reportToBugcatch($errstr,$error,$errfile,$errline);
+
+					}
 					break;
 				case E_WARNING:
 				case E_USER_WARNING:
 				case E_COMPILE_WARNING:
 				case E_RECOVERABLE_ERROR:
+					if($this->isTypeActive('warning'))
+					{
+						$this->reportToBugcatch($errstr,$error,$errfile,$errline);
+
+					}
 					break;
 				case E_NOTICE:
 				case E_USER_NOTICE:
+					if($this->isTypeActive('notice'))
+					{
+						$this->reportToBugcatch($errstr,$error,$errfile,$errline);
+
+					}
 					break;
 				case E_STRICT:
+					if($this->isTypeActive('strict'))
+					{
+						$this->reportToBugcatch($errstr,$error,$errfile,$errline);
+
+					}
 					break;
 				case E_DEPRECATED:
 				case E_USER_DEPRECATED:
+					if($this->isTypeActive('deprecate'))
+					{
+						$this->reportToBugcatch($errstr,$error,$errfile,$errline);
+
+					}
 					break;
 				default :
-					$errorHandler = $this->getErrorHandler();
-					$errorHandler->setFiles($_FILES);
-					$errorHandler->setGet($_GET);
-					$errorHandler->setPost($_POST);
-					$errorHandler->setUserData(array());
-					$errorHandler->setUserData(array());
-					$exception = new ErrorException($errstr,$error,1,$errfile,$errline);
-					$errorHandler->notifyException($exception);
+					if($this->isTypeActive('unknown'))
+					{
+						$this->reportToBugcatch($errstr,$error,$errfile,$errline);
+					}
 					break;
 			}
 
 
 
 		}
+	}
+
+	function reportToBugcatch($errstr,$error,$errfile,$errline)
+	{
+		$errorHandler = $this->getErrorHandler();
+		$errorHandler->setFiles($_FILES);
+		$errorHandler->setGet($_GET);
+		$errorHandler->setPost($_POST);
+		$errorHandler->setUserData(array());
+		$errorHandler->setUserData(array());
+		$exception = new ErrorException($errstr,$error,1,$errfile,$errline);
+		$errorHandler->notifyException($exception);
 	}
 	/**
 	 * Hooks the exceptions.
@@ -341,6 +366,12 @@ class Bugcatches {
 	{
 		$options = get_option($this->plugin_name);
 		return $options['bugcatches_key'];
+	}
+
+	public function isTypeActive($type)
+	{
+		$options = get_option($this->plugin_name);
+		return $options['bugcatches_'.$type];
 	}
 
 	/**
